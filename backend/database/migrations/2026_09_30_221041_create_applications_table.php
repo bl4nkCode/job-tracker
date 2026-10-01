@@ -14,7 +14,7 @@ return new class extends Migration
             $table->foreignId('company_id')->constrained()->cascadeOnDelete();
             $table->string('position');
             $table->enum('status', ['applied', 'interview', 'offer', 'rejected'])
-                  ->default('applied');
+                ->default('applied');
             $table->date('applied_date')->nullable();
             $table->text('notes')->nullable();
             $table->timestamps();
