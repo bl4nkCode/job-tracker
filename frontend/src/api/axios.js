@@ -16,4 +16,22 @@ api.interceptors.request.use((config) => {
   return config
 })
 
+// After every response, check whether the server rejected our token
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    const isAuthPage = ['/login', '/register'].includes(
+      window.location.pathname
+    )
+
+    if (error.response?.status === 401 && !isAuthPage) {
+      localStorage.removeItem('token')
+      localStorage.removeItem('user')
+      window.location.href = '/login'
+    }
+
+    return Promise.reject(error)
+  }
+)
+
 export default api
